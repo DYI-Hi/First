@@ -79,10 +79,10 @@ def create_clu11(packer, frame, bus, clu11, button, speed = None):
   return packer.make_can_msg("CLU11", bus, values)
 
 
-def create_lfa_mfa(packer, frame, enabled):
-  values = {
-    "ACTIVE": enabled,
-  }
+#def create_lfa_mfa(packer, frame, enabled):
+#  values = {
+#    "ACTIVE": enabled,
+#  }
 
   # ACTIVE 1 = Green steering wheel icon
 
@@ -96,7 +96,7 @@ def create_lfa_mfa(packer, frame, enabled):
   # ACTIVE2: nothing
   # HDA_USM: nothing
 
-  return packer.make_can_msg("LFAHDA_MFC", 0, values)
+#  return packer.make_can_msg("LFAHDA_MFC", 0, values)
 
   
 def create_mdps12(packer, frame, mdps12):
