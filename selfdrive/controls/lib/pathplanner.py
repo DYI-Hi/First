@@ -45,12 +45,10 @@ DESIRES = {
   },
 }
 
-
 def calc_states_after_delay(states, v_ego, steer_angle, curvature_factor, steer_ratio, delay):
   states[0].x = v_ego * delay
   states[0].psi = v_ego * curvature_factor * math.radians(steer_angle) / steer_ratio * delay
   return states
-
 
 class PathPlanner():
   def __init__(self, CP):
@@ -142,9 +140,8 @@ class PathPlanner():
     x = max(sm['liveParameters'].stiffnessFactor, 0.1)
     sr = max(sm['liveParameters'].steerRatio, 0.1)
     VM.update_params(x, sr)
-    
-    curvature_factor = VM.curvature_factor(v_ego)
 
+    curvature_factor = VM.curvature_factor(v_ego)
 
     self.LP.parse_model(sm['model'])
 
