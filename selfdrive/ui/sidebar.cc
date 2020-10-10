@@ -83,7 +83,7 @@ static void ui_draw_sidebar_network_type(UIState *s) {
   const int network_w = 100;
   const char *network_type = network_type_map[s->scene.thermal.getNetworkType()];
   nvgFillColor(s->vg, COLOR_LIME);
-  nvgFontSize(s->vg, 40);
+  nvgFontSize(s->vg, 20);
   nvgFontFaceId(s->vg, s->font_sans_regular);
   nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
   nvgTextBox(s->vg, network_x, network_y, network_w, network_type ? network_type : "--", NULL);
@@ -146,9 +146,10 @@ static void ui_draw_sidebar_temp_metric(UIState *s) {
   const int temp_y_offset = 0;
   snprintf(temp_value_str, sizeof(temp_value_str), "%d", s->scene.thermal.getPa0());
   snprintf(temp_value_unit, sizeof(temp_value_unit), "%s", "°C");
+  snprintf(temp_label_str, sizeof(temp_label_str), "%s", "온도");
   strcat(temp_value_str, temp_value_unit);
 
-  ui_draw_sidebar_metric(s, temp_label_str, temp_value_str, temp_severity_map[s->scene.thermal.getThermalStatus()], temp_y_offset, NULL);
+  ui_draw_sidebar_metric(s, temp_label_str, temp_severity_map[s->scene.thermal.getThermalStatus()], temp_y_offset, NULL);
 }
 
 static void ui_draw_sidebar_panda_metric(UIState *s) {
