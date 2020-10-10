@@ -1,7 +1,7 @@
 from cereal import car, log
 from common.realtime import DT_CTRL
 from selfdrive.car import apply_std_steer_torque_limits
-from selfdrive.car.hyundai.hyundaican import create_lkas11, create_clu11, create_mdps12 #create_lfa_mfa,  코나ev 캔에러 체크
+from selfdrive.car.hyundai.hyundaican import create_lkas11, create_clu11, create_mdps12, create_lfa_mfa
 from selfdrive.car.hyundai.values import Buttons, SteerLimitParams, CAR, FEATURES
 from opendbc.can.packer import CANPacker
 from selfdrive.config import Conversions as CV
@@ -364,8 +364,8 @@ class CarController():
         self.res_delay = 0
 
     # 20 Hz LFA MFA message
-    #if frame % 5 == 0 and self.car_fingerprint in FEATURES["send_lfa_mfa"]:
-    #  can_sends.append(create_lfa_mfa(self.packer, frame, enabled))
+    if frame % 5 == 0 and self.car_fingerprint in FEATURES["send_lfa_mfa"]:
+      can_sends.append(create_lfa_mfa(self.packer, frame, enabled))
 
     self.lkas11_cnt += 1
     return can_sends

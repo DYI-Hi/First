@@ -64,6 +64,20 @@ class CarInterface(CarInterfaceBase):
         ret.steerRatio = 16.5
         ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.01]]
+      elif candidate == CAR.GENESIS_G70:
+        ret.lateralTuning.pid.kf = 0.00005
+        ret.mass = 2060. + STD_CARGO_KG
+        ret.wheelbase = 3.01
+        ret.steerRatio = 16.5
+        ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.01]]
+      elif candidate == CAR.GENESIS_G80:
+        ret.lateralTuning.pid.kf = 0.00005
+        ret.mass = 2060. + STD_CARGO_KG
+        ret.wheelbase = 3.01
+        ret.steerRatio = 16.5
+        ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
+        ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.01]]
       elif candidate == CAR.GENESIS_G90:
         ret.lateralTuning.pid.kf = 0.00005
         ret.mass = 2120. + STD_CARGO_KG
@@ -239,6 +253,24 @@ class CarInterface(CarInterfaceBase):
         ret.wheelbase = 2.78
         ret.steerRatio = 14.4 * 1.15
       elif candidate == CAR.GENESIS:
+        ret.lateralTuning.init('indi')
+        ret.lateralTuning.indi.innerLoopGain = 3.0
+        ret.lateralTuning.indi.outerLoopGain = 2.0
+        ret.lateralTuning.indi.timeConstant = 1.0
+        ret.lateralTuning.indi.actuatorEffectiveness = 1.5
+        ret.mass = 2060. + STD_CARGO_KG
+        ret.wheelbase = 3.01
+        ret.steerRatio = 16.5
+      elif candidate == CAR.GENESIS_G70:
+        ret.lateralTuning.init('indi')
+        ret.lateralTuning.indi.innerLoopGain = 3.0
+        ret.lateralTuning.indi.outerLoopGain = 2.0
+        ret.lateralTuning.indi.timeConstant = 1.0
+        ret.lateralTuning.indi.actuatorEffectiveness = 1.5
+        ret.mass = 2060. + STD_CARGO_KG
+        ret.wheelbase = 3.01
+        ret.steerRatio = 16.5
+      elif candidate == CAR.GENESIS_G80:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGain = 3.0
         ret.lateralTuning.indi.outerLoopGain = 2.0
@@ -472,6 +504,32 @@ class CarInterface(CarInterfaceBase):
         ret.wheelbase = 2.78
         ret.steerRatio = 14.4 * 1.15
       elif candidate == CAR.GENESIS:
+        ret.lateralTuning.init('lqr')
+        ret.lateralTuning.lqr.scale = 1750.0
+        ret.lateralTuning.lqr.ki = 0.01
+        ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
+        ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
+        ret.lateralTuning.lqr.c = [1., 0.]
+        ret.lateralTuning.lqr.k = [-100., 450.]
+        ret.lateralTuning.lqr.l = [0.22, 0.318]
+        ret.lateralTuning.lqr.dcGain = 0.003
+        ret.mass = 2060. + STD_CARGO_KG
+        ret.wheelbase = 3.01
+        ret.steerRatio = 14.825
+      elif candidate == CAR.GENESIS_G70:
+        ret.lateralTuning.init('lqr')
+        ret.lateralTuning.lqr.scale = 1750.0
+        ret.lateralTuning.lqr.ki = 0.03
+        ret.lateralTuning.lqr.a = [0., 1., -0.22619643, 1.21822268]
+        ret.lateralTuning.lqr.b = [-1.92006585e-04, 3.95603032e-05]
+        ret.lateralTuning.lqr.c = [1., 0.]
+        ret.lateralTuning.lqr.k = [-100., 450.]
+        ret.lateralTuning.lqr.l = [0.22, 0.318]
+        ret.lateralTuning.lqr.dcGain = 0.003
+        ret.mass = 2060. + STD_CARGO_KG
+        ret.wheelbase = 3.01
+        ret.steerRatio = 16.5
+      elif candidate == CAR.GENESIS_G80:
         ret.lateralTuning.init('lqr')
         ret.lateralTuning.lqr.scale = 1750.0
         ret.lateralTuning.lqr.ki = 0.03

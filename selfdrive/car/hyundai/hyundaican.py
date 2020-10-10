@@ -20,6 +20,11 @@ def create_lkas11(packer, frame, car_fingerprint, apply_steer, steer_req,
   values["CF_Lkas_ToiFlt"] = 0
   values["CF_Lkas_MsgCount"] = frame % 0x10
   values["CF_Lkas_Chksum"] = 0
+  
+  if car_fingerprint == CAR.GENESIS: # 제네시스DH 인게이지 목표 작업중
+    # This field is actually LdwsActivemode
+    # Genesis and Optima fault when forwarding while engaged
+    values["CF_Lkas_LdwsActivemode"] = 2
 
   if car_fingerprint in [CAR.PALISADE, CAR.SANTAFE, CAR.KONA_EV]:
     values["CF_Lkas_Bca_R"] = int(CC.hudControl.leftLaneVisible) + (int(CC.hudControl.rightLaneVisible) << 1)
@@ -38,18 +43,11 @@ def create_lkas11(packer, frame, car_fingerprint, apply_steer, steer_req,
     # SysWarning 6 = keep hands on wheel (red) + beep
     # Note: the warning is hidden while the blinkers are on
     values["CF_Lkas_SysWarning"] = 4 if sys_warning else 0
-
-  if car_fingerprint == CAR.GENESIS:
-    # This field is actually LdwsActivemode
-    # Genesis and Optima fault when forwarding while engaged
-    values["CF_Lkas_Bca_R"] = 2
     
   params = Params()
   ldws_car_fix = params.get("LdwsCarFix", encoding='utf8') == "1"
   if ldws_car_fix:
   	values["CF_Lkas_LdwsOpt_USM"] = 3
-	
-
 
   dat = packer.make_can_msg("LKAS11", 0, values)[2]
 
@@ -68,7 +66,6 @@ def create_lkas11(packer, frame, car_fingerprint, apply_steer, steer_req,
 
   return packer.make_can_msg("LKAS11", bus, values)
 
-
 def create_clu11(packer, frame, bus, clu11, button, speed = None):
   values = copy.deepcopy( clu11 )
   if speed != None:
@@ -78,11 +75,23 @@ def create_clu11(packer, frame, bus, clu11, button, speed = None):
   values["CF_Clu_AliveCnt1"] = frame % 0x10
   return packer.make_can_msg("CLU11", bus, values)
 
+def create_mdps12(packer, frame, mdps12):
+  values = copy.deepcopy(mdps12) # values = mdps12
+  values["CF_Mdps_ToiActive"] = 0
+  values["CF_Mdps_ToiUnavail"] = 1
+  values["CF_Mdps_MsgCount2"] = frame % 0x100
+  values["CF_Mdps_Chksum2"] = 0
 
-#def create_lfa_mfa(packer, frame, enabled):
-#  values = {
-#    "ACTIVE": enabled,
-#  }
+  dat = packer.make_can_msg("MDPS12", 2, values)[2]
+  checksum = sum(dat) % 256
+  values["CF_Mdps_Chksum2"] = checksum
+
+  return packer.make_can_msg("MDPS12", 2, values)
+
+def create_lfa_mfa(packer, frame, enabled):
+  values = {
+    "ACTIVE": enabled,
+  }
 
   # ACTIVE 1 = Green steering wheel icon
 
@@ -96,19 +105,4 @@ def create_clu11(packer, frame, bus, clu11, button, speed = None):
   # ACTIVE2: nothing
   # HDA_USM: nothing
 
-#  return packer.make_can_msg("LFAHDA_MFC", 0, values)
-
-  
-def create_mdps12(packer, frame, mdps12):
-  values = copy.deepcopy( mdps12 )
-  #values = mdps12
-  values["CF_Mdps_ToiActive"] = 0
-  values["CF_Mdps_ToiUnavail"] = 1
-  values["CF_Mdps_MsgCount2"] = frame % 0x100
-  values["CF_Mdps_Chksum2"] = 0
-
-  dat = packer.make_can_msg("MDPS12", 2, values)[2]
-  checksum = sum(dat) % 256
-  values["CF_Mdps_Chksum2"] = checksum
-
-  return packer.make_can_msg("MDPS12", 2, values)
+  return packer.make_can_msg("LFAHDA_MFC", 0, values)
