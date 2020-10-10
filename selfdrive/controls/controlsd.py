@@ -234,9 +234,9 @@ class Controls:
       self.events.add(EventName.vehicleModelInvalid)
     if not self.sm['liveLocationKalman'].posenetOK:
       self.events.add(EventName.posenetInvalid)
-    if not self.sm['frame'].recoverState < 2:
+    #if not self.sm['frame'].recoverState < 2:
       # counter>=2 is active
-      self.events.add(EventName.focusRecoverActive)
+      #self.events.add(EventName.focusRecoverActive)
     if not self.sm['plan'].radarValid:
       self.events.add(EventName.radarFault)
     if self.sm['plan'].radarCanError:
