@@ -149,7 +149,7 @@ static void ui_draw_sidebar_temp_metric(UIState *s) {
   snprintf(temp_label_str, sizeof(temp_label_str), "%s", "온도");
   strcat(temp_value_str, temp_value_unit);
 
-  ui_draw_sidebar_metric(s, temp_label_str, temp_severity_map[s->scene.thermal.getThermalStatus()], temp_y_offset, NULL);
+  ui_draw_sidebar_metric(s, temp_label_str, temp_value_str, temp_severity_map[s->scene.thermal.getThermalStatus()], temp_y_offset, NULL);
 }
 
 static void ui_draw_sidebar_panda_metric(UIState *s) {
