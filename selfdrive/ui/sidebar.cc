@@ -44,7 +44,7 @@ static void ui_draw_sidebar_network_strength(UIState *s) {
 
 static void ui_draw_sidebar_ip_addr(UIState *s) {
   const int network_ip_w = 176;
-  const int network_ip_x = !s->scene.uilayout_sidebarcollapsed ? 54 : -(sbr_w);
+  const int network_ip_x = !s->scene.uilayout_sidebarcollapsed ? 57 : -(sbr_w);
   const int network_ip_y = 255;
 
   char network_ip_str[15];
@@ -52,7 +52,7 @@ static void ui_draw_sidebar_ip_addr(UIState *s) {
   nvgFillColor(s->vg, COLOR_ORANGE);
   nvgFontSize(s->vg, 60*fFontSize);
   nvgFontFaceId(s->vg, s->font_sans_bold);
-  nvgTextAlign(s->vg, NVG_ALIGN_CENTER | NVG_ALIGN_MIDDLE);
+  nvgTextAlign(s->vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
   nvgTextBox(s->vg, network_ip_x, network_ip_y, network_ip_w, network_ip_str, NULL);
 }
 
