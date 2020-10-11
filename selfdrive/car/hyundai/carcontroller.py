@@ -35,6 +35,7 @@ class CarController():
     self.emergency_manual_timer = 0
     self.driver_steering_torque_above_timer = 0
     self.mode_change_timer = 0
+    self.turning_signal_timer = 0 # 상시조향코드 추가로 인한 추가
 
     self.steer_mode = ""
     self.mdps_status = ""
