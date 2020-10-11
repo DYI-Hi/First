@@ -78,38 +78,35 @@ class CarController():
     self.params = Params()
     self.mode_change_switch = int(self.params.get('CruiseStatemodeSelInit'))
 
-  def process_hud_alert(self, enabled, CC):
-    visual_alert = CC.hudControl.visualAlert
-    left_lane = CC.hudControl.leftLaneVisible
-    right_lane = CC.hudControl.rightLaneVisible
-
+  def process_hud_alert(enabled, fingerprint, visual_alert, left_lane,
+                        right_lane, left_lane_depart, right_lane_depart, button_on):
     sys_warning = (visual_alert == VisualAlert.steerRequired)
-
-    if left_lane:
-      self.hud_timer_left = 100
-
-    if right_lane:
-      self.hud_timer_right = 100
-
-    if self.hud_timer_left:
-      self.hud_timer_left -= 1
-
-    if self.hud_timer_right:
-      self.hud_timer_right -= 1
 
     # initialize to no line visible
     sys_state = 1
-    if self.hud_timer_left and self.hud_timer_right or sys_warning:  # HUD alert only display when LKAS status is active
+    if not button_on:
+      lane_visible = 0
+    if left_lane and right_lane or sys_warning:  # HUD alert only display when LKAS status is active
       if enabled or sys_warning:
         sys_state = 3
       else:
         sys_state = 4
-    elif self.hud_timer_left:
+    elif left_lane:
       sys_state = 5
-    elif self.hud_timer_right:
+    elif right_lane:
       sys_state = 6
 
-    return sys_warning, sys_state
+    # initialize to no warnings
+    left_lane_warning = 0
+    right_lane_warning = 0
+    if left_lane_depart:
+      left_lane_warning = 1 if fingerprint in [CAR.GENESIS, CAR.GENESIS_G70, CAR.GENESIS_G80,
+                                               CAR.GENESIS_G90, CAR.GENESIS_G90_L] else 2
+    if right_lane_depart:
+      right_lane_warning = 1 if fingerprint in [CAR.GENESIS, CAR.GENESIS_G70, CAR.GENESIS_G80,
+                                                CAR.GENESIS_G90, CAR.GENESIS_G90_L] else 2
+
+    return sys_warning, sys_state, left_lane_warning, right_lane_warning
 
   def param_load(self ):
     self.command_cnt += 1
@@ -218,8 +215,8 @@ class CarController():
       self.driver_steering_torque_above_timer = 30
     if self.lanechange_manual_timer or self.driver_steering_torque_above_timer:
       lkas_active = 0
-    if self.turning_signal_timer and CS.out.vEgo > 60 * CV.KPH_TO_MS: #TenesiADD Blinker tune 시속60미만에서는 상시조향
-      lkas_active = 0
+    #if self.turning_signal_timer and CS.out.vEgo > 60 * CV.KPH_TO_MS: #TenesiADD Blinker tune 시속60미만에서는 상시조향
+    #  lkas_active = 0
     if self.lanechange_manual_timer > 0:
       self.lanechange_manual_timer -= 1
     if self.emergency_manual_timer > 0:
