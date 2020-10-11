@@ -585,7 +585,7 @@ def main():
     ("PutPrebuiltOn", "0"),
     ("FingerprintIssuedFix", "0"),
     ("LdwsCarFix", "0"),
-    ("LateralControlMethod", "0"),
+    ("LateralControlMethod", "2"),
     ("CruiseStatemodeSelInit", "0"),
     ("LateralControlPriority", "0"),
   ]

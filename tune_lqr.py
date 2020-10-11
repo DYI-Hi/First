@@ -48,7 +48,7 @@ kyd.conf['EnableLiveTune'] = "1"
 #param = ["cameraOffset", "outerLG", "innerLG", "timeConst", "actEffect", "steerRatio", "sR_boost", "sR_BP0", \
 #           "sR_BP1", "sR_time", "steerRateCost"]
 
-param = ["cameraOffset", "scale", "ki", "dc_gain", "steerRatio", "steerRateCost"]
+param = ["cameraOffset", "scale", "ki", "dc_gain", "steerRatio", "steerRateCost", "steerActuatorDelay"]
 # 테네시 수정
 #param = ["Kp", "Ki", "Kf", "steerRatio", "sR_boost", "sR_BP0", \
 #         "sR_BP1", "sR_time", "steerRateCost", "deadzone", "slowOnCurves", \

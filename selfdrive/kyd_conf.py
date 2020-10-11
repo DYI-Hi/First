@@ -56,6 +56,10 @@ class kyd_conf():
       self.conf['steerRateCost'] = str(round(CP.steerRateCost,3))
       write_conf = True
 
+    if self.conf['SteerActuatorDelay'] == "-1":
+      self.conf['SteerActuatorDelay'] = str(round(CP.SteerActuatorDelay,3))
+      write_conf = True
+
     if write_conf:
       self.write_config(self.config)
 
