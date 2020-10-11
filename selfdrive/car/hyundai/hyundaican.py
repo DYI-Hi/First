@@ -22,9 +22,7 @@ def create_lkas11(packer, frame, car_fingerprint, apply_steer, steer_req,
   values["CF_Lkas_Chksum"] = 0
   
   if car_fingerprint == CAR.GENESIS: # 제네시스DH 인게이지 목표 작업중
-    # This field is actually LdwsActivemode
-    # Genesis and Optima fault when forwarding while engaged
-    values["CF_Lkas_LdwsActivemode"] = 2
+    values["CF_Lkas_Bca_R"] = 2 # 제네시스DH 계열등에서
 
   if car_fingerprint in [CAR.PALISADE, CAR.SANTAFE, CAR.KONA_EV]:
     values["CF_Lkas_Bca_R"] = int(CC.hudControl.leftLaneVisible) + (int(CC.hudControl.rightLaneVisible) << 1)
