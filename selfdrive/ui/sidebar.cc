@@ -43,7 +43,7 @@ static void ui_draw_sidebar_network_strength(UIState *s) {
 }
 
 static void ui_draw_sidebar_ip_addr(UIState *s) {
-  const int network_ip_w = 176;
+  const int network_ip_w = 500;
   const int network_ip_x = 3;
   const int network_ip_y = 255;
 
