@@ -48,8 +48,8 @@ kyd.conf['EnableLiveTune'] = "1"
 #param = ["cameraOffset", "outerLG", "innerLG", "timeConst", "actEffect", "steerRatio", "sR_boost", "sR_BP0", \
 #           "sR_BP1", "sR_time", "steerRateCost"]
 
-param = ["cameraOffset", "scale", "ki", "dc_gain"]
-
+param = ["cameraOffset", "scale", "ki", "dc_gain", "steerRatio", "steerRateCost"]
+# 테네시 수정
 #param = ["Kp", "Ki", "Kf", "steerRatio", "sR_boost", "sR_BP0", \
 #         "sR_BP1", "sR_time", "steerRateCost", "deadzone", "slowOnCurves", \
 #         "1barBP0", "1barBP1", "1barMax", "2barBP0", "2barBP1", \
@@ -63,8 +63,8 @@ while True:
   print ("")
   print (print_letters(kyd.conf[param[j]]))
   print ("")
-  print ("q: +50   w: +1   1: +0.1   3: +0.05   5: +0.01   7: +0.001   r: +0.0001")
-  print ("c: -50   x: -1   a: -0.1   d: -0.05   g: -0.01   j: -0.001   v: -0.0001")
+  print ("q: +50   w: +1   1: +0.1   3: +0.05   5: +0.01   7: +0.001   9: +0.0001   r: +0.00001")
+  print ("c: -50   x: -1   a: -0.1   d: -0.05   g: -0.01   j: -0.001   i: -0.0001   v: -0.00001")
 #  print ("w,1,3,5,7,r to incr 1,0.1,0.05,0.01,0.001,0.00001")
 #  print ("x,a,d,g,j,v to decr 1,0.1,0.05,0.01,0.001,0.00001")
   print ("0: 0   L: 1")
@@ -76,10 +76,18 @@ while True:
   char  = getch()
   write_json = False
   if (char == "v"):
-    kyd.conf[param[j]] = str(round((float(kyd.conf[param[j]]) - 0.0001),5))
+    kyd.conf[param[j]] = str(round((float(kyd.conf[param[j]]) - 0.00001),5))
     write_json = True
 
   if (char == "r"):
+    kyd.conf[param[j]] = str(round((float(kyd.conf[param[j]]) + 0.00001),5))
+    write_json = True
+
+  if (char == "i"):
+    kyd.conf[param[j]] = str(round((float(kyd.conf[param[j]]) - 0.0001),5))
+    write_json = True
+
+  if (char == "9"):
     kyd.conf[param[j]] = str(round((float(kyd.conf[param[j]]) + 0.0001),5))
     write_json = True
     
