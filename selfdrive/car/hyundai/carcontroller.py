@@ -210,22 +210,35 @@ class CarController():
     # disable if steer angle reach 90 deg, otherwise mdps fault in some models
     lkas_active = enabled and abs(CS.out.steeringAngle) < 90. #TenesiDel -> and self.lkas_button_on
 
-    if (( CS.out.leftBlinker and not CS.out.rightBlinker) or ( CS.out.rightBlinker and not CS.out.leftBlinker)) and CS.out.vEgo > 60 * CV.KPH_TO_MS: # 깜빡이 작동시에도 상히조향 유지 수정해보기
-      self.lanechange_manual_timer = 10
-    if CS.out.leftBlinker and CS.out.rightBlinker:
-      self.emergency_manual_timer = 10
-    if abs(CS.out.steeringTorque) > self.driver_steering_torque_above and CS.out.vEgo > 60: # 깜빡이 작동시에도 상히조향 유지 수정해보기
-      self.driver_steering_torque_above_timer = 30
-    if self.lanechange_manual_timer or self.driver_steering_torque_above_timer:
+    # fix for Genesis hard fault at low speed 테네시 추가
+    if CS.out.vEgo < 60 * CV.KPH_TO_MS and self.car_fingerprint == CAR.GENESIS and not CS.mdps_bus:
+      lkas_active = False
+
+#    if (( CS.out.leftBlinker and not CS.out.rightBlinker) or ( CS.out.rightBlinker and not CS.out.leftBlinker)) and CS.out.vEgo > 60 * CV.KPH_TO_MS: # 깜빡이 작동시에도 상히조향 유지 수정해보기
+#      self.lanechange_manual_timer = 10
+#    if CS.out.leftBlinker and CS.out.rightBlinker:
+#      self.emergency_manual_timer = 10
+#    if abs(CS.out.steeringTorque) > self.driver_steering_torque_above and CS.out.vEgo > 60: # 깜빡이 작동시에도 상히조향 유지 수정해보기
+#      self.driver_steering_torque_above_timer = 30
+#    if self.lanechange_manual_timer or self.driver_steering_torque_above_timer:
+#      lkas_active = 0
+#    if self.lanechange_manual_timer > 0:
+#      self.lanechange_manual_timer -= 1
+#    if self.emergency_manual_timer > 0:
+#      self.emergency_manual_timer -= 1
+#    if self.driver_steering_torque_above_timer > 0:
+#      self.driver_steering_torque_above_timer -= 1
+
+    # Disable steering while turning blinker on and speed below 60 kph
+    if CS.out.leftBlinker or CS.out.rightBlinker:
+      if self.car_fingerprint not in [CAR.K5, CAR.K5_HEV]: # 테네시 추가 OPTIMA -> K5
+        self.turning_signal_timer = 100  # Disable for 1.0 Seconds after blinker turned off
+      elif CS.left_blinker_flash or CS.right_blinker_flash:  # Optima has blinker flash signal only
+        self.turning_signal_timer = 100
+    if self.turning_signal_timer and CS.out.vEgo > 60 * CV.KPH_TO_MS:  # TenesiADD Blinker tune 시속60미만에서는 상시조향
       lkas_active = 0
-    #if self.turning_signal_timer and CS.out.vEgo > 60 * CV.KPH_TO_MS: #TenesiADD Blinker tune 시속60미만에서는 상시조향
-    #  lkas_active = 0
-    if self.lanechange_manual_timer > 0:
-      self.lanechange_manual_timer -= 1
-    if self.emergency_manual_timer > 0:
-      self.emergency_manual_timer -= 1
-    if self.driver_steering_torque_above_timer > 0:
-      self.driver_steering_torque_above_timer -= 1
+    if self.turning_signal_timer:  # TenesiADD
+      self.turning_signal_timer -= 1
 
     if not lkas_active:
       apply_steer = 0
