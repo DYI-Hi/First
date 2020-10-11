@@ -139,7 +139,8 @@ class PathPlanner():
     # Update vehicle model
     x = max(sm['liveParameters'].stiffnessFactor, 0.1)
     sr = max(sm['liveParameters'].steerRatio, 0.1)
-    VM.update_params(0.8, CP.steerRatio) # 타이어 강성계수 고정,조향비율 고정 계산
+    #VM.update_params(0.8, CP.steerRatio) # 타이어 강성계수 고정,조향비율 고정 계산
+    VM.update_params(0.8, sr)
 
     curvature_factor = VM.curvature_factor(v_ego)
 
