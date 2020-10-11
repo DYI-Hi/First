@@ -230,16 +230,16 @@ class CarController():
 #    if self.driver_steering_torque_above_timer > 0:
 #      self.driver_steering_torque_above_timer -= 1
 
-    # Disable steering while turning blinker on and speed below 60 kph
+    # Disable steering while turning blinker on and speed below 60 kph #201011 상시조향 작업 작동성공
     if CS.out.leftBlinker or CS.out.rightBlinker:
       if self.car_fingerprint not in [CAR.K5, CAR.K5_HEV]: # 테네시 추가 OPTIMA -> K5
         self.turning_signal_timer = 100  # Disable for 1.0 Seconds after blinker turned off
       elif CS.left_blinker_flash or CS.right_blinker_flash:  # Optima has blinker flash signal only
         self.turning_signal_timer = 100
-    if self.turning_signal_timer and CS.out.vEgo > 60 * CV.KPH_TO_MS:  # TenesiADD Blinker tune 시속60미만에서는 상시조향
+    if self.turning_signal_timer and CS.out.vEgo > 70 * CV.KPH_TO_MS:  # TenesiADD Blinker tune 시속60미만에서는 상시조향
       lkas_active = 0
     if self.turning_signal_timer:  # TenesiADD
-      self.turning_signal_timer -= 1
+      self.turning_signal_timer -= 1 #201011 상시조향 작업 작동성공
 
     if not lkas_active:
       apply_steer = 0
