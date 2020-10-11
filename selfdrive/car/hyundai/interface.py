@@ -85,7 +85,7 @@ class CarInterface(CarInterfaceBase):
         ret.steerRatio = 13.0
         ret.lateralTuning.pid.kiBP, ret.lateralTuning.pid.kpBP = [[0.], [0.]]
         ret.lateralTuning.pid.kpV, ret.lateralTuning.pid.kiV = [[0.16], [0.01]]
-      elif candidate == CAR.GENESIS_G90L:
+      elif candidate == CAR.GENESIS_G90_L:
         ret.lateralTuning.pid.kf = 0.00005
         ret.mass = 2290. + STD_CARGO_KG
         ret.wheelbase = 3.45
@@ -288,7 +288,7 @@ class CarInterface(CarInterfaceBase):
         ret.mass = 2120. + STD_CARGO_KG
         ret.wheelbase = 3.16
         ret.steerRatio = 13.0
-      elif candidate == CAR.GENESIS_G90L:
+      elif candidate == CAR.GENESIS_G90_L:
         ret.lateralTuning.init('indi')
         ret.lateralTuning.indi.innerLoopGain = 3.0
         ret.lateralTuning.indi.outerLoopGain = 2.0
@@ -558,7 +558,7 @@ class CarInterface(CarInterfaceBase):
         ret.steerRatio = 13.0 #int(params.get('SteerRatioAdj')) * 0.1
         ret.steerActuatorDelay = 0.2 #int(params.get('SteerActuatorDelayAdj')) * 0.001
         ret.steerRateCost = 0.55 #int(params.get('SteerRateCostAdj')) * 0.001
-      elif candidate == CAR.GENESIS_G90L:
+      elif candidate == CAR.GENESIS_G90_L:
         ret.lateralTuning.init('lqr')
         ret.lateralTuning.lqr.scale = 1680 #Scale
         ret.lateralTuning.lqr.ki = 0.01
