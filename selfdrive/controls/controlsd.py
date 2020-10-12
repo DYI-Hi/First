@@ -156,7 +156,7 @@ class Controls:
     self.timer_allowed = 1500
     self.timer_start = 1500
 
-  def auto_enable(self, CS):
+  def auto_enable(self, CS): # 자동 인게이지
     if self.state != State.enabled and CS.vEgo >= 15 * CV.KPH_TO_MS and CS.gearShifter == 2:
       if self.sm.all_alive_and_valid() and self.enabled != self.controlsAllowed:
         self.events.add( EventName.pcmEnable )
@@ -253,7 +253,7 @@ class Controls:
     #   and not self.CP.radarOffCan and CS.vEgo < 0.3:
     #  self.events.add(EventName.noTarget)
     
-    self.auto_enable( CS )
+    self.auto_enable( CS ) # 자동 인게이지 코드 관련
 
   def data_sample(self):
     """Receive data from sockets and update carState"""
