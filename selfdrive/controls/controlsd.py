@@ -573,7 +573,7 @@ class Controls:
     CS = self.data_sample()
     self.prof.checkpoint("Sample")
 
-    if self.read_only:
+    if self.read_only: # 자동 인게이지 관련
       self.hyundai_lkas = self.read_only
     elif CS.cruiseState.enabled and self.hyundai_lkas:
       self.hyundai_lkas = False
@@ -581,7 +581,7 @@ class Controls:
 
     self.update_events(CS)
 
-    if not self.hyundai_lkas:
+    if not self.hyundai_lkas: # 원래는 read.only
       # Update control state
       self.state_transition(CS)
       self.prof.checkpoint("State transition")
@@ -595,7 +595,7 @@ class Controls:
     self.publish_logs(CS, start_time, actuators, v_acc, a_acc, lac_log)
     self.prof.checkpoint("Sent")
 
-    if not CS.cruiseState.enabled and not self.hyundai_lkas:
+    if not CS.cruiseState.enabled and not self.hyundai_lkas: # 자동인게이지 관련
       self.hyundai_lkas = True
 
   def controlsd_thread(self):
