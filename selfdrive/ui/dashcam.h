@@ -9,8 +9,7 @@
 #define RECORD_INTERVAL 180 // Time in seconds to rotate recordings; Max for screenrecord is 3 minutes
 #define RECORD_FILES 40     // Number of files to create before looping over
 
-typedef struct dashcam_element
-{
+typedef struct dashcam_element{
   int pos_x;
   int pos_y;
   int width;
