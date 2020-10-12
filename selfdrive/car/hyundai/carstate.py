@@ -55,8 +55,8 @@ class CarState(CarStateBase):
     cp_sas = cp2 if self.sas_bus else cp
     cp_scc = cp2 if self.scc_bus == 1 else cp_cam if self.scc_bus == 2 else cp
 
-    self.prev_cruise_main_button = self.cruise_main_button
     self.prev_cruise_buttons = self.cruise_buttons
+    self.prev_cruise_main_button = self.cruise_main_button
 
     ret = car.CarState.new_message()
 
@@ -96,14 +96,14 @@ class CarState(CarStateBase):
     # cruise state
     #ret.cruiseState.available = True
     #ret.cruiseState.enabled = cp_scc.vl["SCC12"]['ACCMode'] != 0
-    self.main_on = (cp_scc.vl["SCC11"]["MainMode_ACC"] != 0)  # 1056
-    self.acc_active = (cp_scc.vl["SCC12"]['ACCMode'] != 0)    # 1057
+    self.main_on = (cp_scc.vl["SCC11"]["MainMode_ACC"] != 0)  # 1056 크루즈 메인버튼 상태
+    self.acc_active = (cp_scc.vl["SCC12"]['ACCMode'] != 0)    # 1057 크루즈 모드 상태
     self.update_atom( cp, cp2, cp_cam )
 
     ret.cruiseState.available = self.main_on and self.cruiseState_modeSel != 4
     ret.cruiseState.enabled =  ret.cruiseState.available
     ret.cruiseState.standstill = cp_scc.vl["SCC11"]['SCCInfoDisplay'] == 4.
-    
+    # 자동 오파 인게지이 최저 속도
     self.is_set_speed_in_mph = int(cp.vl["CLU11"]["CF_Clu_SPEED_UNIT"])
 
     self.cruiseState_modeSel , speed_kph = self.SC.update_cruiseSW( self )
