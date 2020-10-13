@@ -848,7 +848,7 @@ static void ui_draw_debug(UIState *s)
   sport @5;
   low @6;
   brake @7;
-  eco @8;
+  eco @8; 기어단수 같은것들 표시하기 예시..
 */
 static void ui_draw_gear( UIState *s )
 {

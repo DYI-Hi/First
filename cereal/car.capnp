@@ -163,7 +163,7 @@ struct CarState {
   # cruise state
   cruiseState @10 :CruiseState;
 
-  # gear
+  # gear 레버위치 추가
   gearShifter @14 :GearShifter;
 
   # button presses
