@@ -158,8 +158,8 @@ typedef struct UIScene {
 
   char ipAddr[20];
 
-// 기어 레버위치 추가
-  cereal::CarState::GearShifter  getGearShifter;  
+/* 기어 레버위치 추가 */
+  cereal::CarState::GearShifter  getGearShifter;
 
   struct _LIVE_PARAM
   {

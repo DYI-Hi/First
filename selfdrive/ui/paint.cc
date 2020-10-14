@@ -850,6 +850,7 @@ static void ui_draw_debug(UIState *s)
   brake @7;
   eco @8; 기어단수 같은것들 표시하기 예시..
 */
+/* 기어레버 위치 표시 */
 static void ui_draw_gear( UIState *s )
 {
   UIScene &scene = s->scene;  
