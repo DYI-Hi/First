@@ -924,7 +924,7 @@ static void ui_draw_vision_event(UIState *s) {
     } else {
       color = nvgRGBA(23, 51, 73, 255);
     }
-
+/* 기어레버 위치 추가 */
     if( s->scene.controls_state.getEngageable() )
     {
       float angleSteers = s->scene.controls_state.getAngleSteers();
