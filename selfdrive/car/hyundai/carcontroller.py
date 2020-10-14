@@ -33,7 +33,7 @@ class CarController():
     self.last_lead_distance = 0
     self.lanechange_manual_timer = 0
     self.emergency_manual_timer = 0
-    self.driver_steering_torque_above_timer = 0
+    self.driver_steering_torque_above_timer = 0 # 조향토크 사용자 토크 힘
     self.mode_change_timer = 0
     self.turning_signal_timer = 0 # 상시조향코드 추가로 인한 추가
 
