@@ -150,11 +150,11 @@ class Controls:
     self.rk = Ratekeeper(100, print_delay_threshold=None)
     self.prof = Profiler(False)  # off by default
 
-    self.hyundai_lkas = self.read_only  #read_only
+    self.hyundai_lkas = self.read_only  #read_only 자동인게이지 관련
 
-    self.controlsAllowed = 0
-    self.timer_allowed = 1500
-    self.timer_start = 1500
+    self.controlsAllowed = 0 # 자동 인게이지 관련
+    self.timer_allowed = 1500 # 자동 인게이지 관련
+    self.timer_start = 1500 # 자동 인게이지 관련
 
   def auto_enable(self, CS): # 자동 인게이지
     if self.state != State.enabled and CS.vEgo >= 15 * CV.KPH_TO_MS and CS.gearShifter == 2:
@@ -172,10 +172,10 @@ class Controls:
     if self.startup_event is not None:
       self.events.add(self.startup_event)
       self.startup_event = None
-      self.timer_start = 500
+      self.timer_start = 500 # 자동인게이지 관련
 
-    if self.timer_start:
-      self.timer_start -= 1
+    if self.timer_start: # 자동인게이지 관련
+      self.timer_start -= 1 # 자동인게이지 관련
 
     # Create events for battery, temperature, disk space, and memory
     if self.sm['thermal'].batteryPercent < 1 and self.sm['thermal'].chargingError:
@@ -191,7 +191,7 @@ class Controls:
 
     # Handle calibration status
     cal_status = self.sm['liveCalibration'].calStatus
-    if cal_status != Calibration.CALIBRATED and not self.timer_start:
+    if cal_status != Calibration.CALIBRATED and not self.timer_start: # 자동인게이지 관련
       if cal_status == Calibration.UNCALIBRATED:
         self.events.add(EventName.calibrationIncomplete)
       else:
@@ -220,7 +220,7 @@ class Controls:
     if not self.sm.alive['plan'] and self.sm.alive['pathPlan']:
       # only plan not being received: radar not communicating
       self.events.add(EventName.radarCommIssue)
-    elif not self.timer_start and not self.sm.all_alive_and_valid():
+    elif not self.timer_start and not self.sm.all_alive_and_valid(): # 자동인게이지 관련
       self.events.add(EventName.commIssue)
     #if not self.sm['pathPlan'].mpcSolutionValid:
       #self.events.add(EventName.plannerError)
@@ -252,7 +252,7 @@ class Controls:
     #if CS.brakePressed and self.sm['plan'].vTargetFuture >= STARTING_TARGET_SPEED \
     #   and not self.CP.radarOffCan and CS.vEgo < 0.3:
     #  self.events.add(EventName.noTarget)
-    
+
     self.auto_enable( CS ) # 자동 인게이지 코드 관련
 
   def data_sample(self):
@@ -275,11 +275,11 @@ class Controls:
     # we want to disengage openpilot. However the status from the panda goes through
     # another socket other than the CAN messages and one can arrive earlier than the other.
     # Therefore we allow a mismatch for two samples, then we trigger the disengagement.
-    self.controlsAllowed = self.sm['health'].controlsAllowed
-    if not self.enabled:
-      self.mismatch_counter = 0
-    elif not self.controlsAllowed:
-      self.mismatch_counter += 1
+    self.controlsAllowed = self.sm['health'].controlsAllowed # 자동인게이지 관련
+    if not self.enabled: # 자동인게이지 관련
+      self.mismatch_counter = 0 # 자동인게이지 관련
+    elif not self.controlsAllowed: # 자동인게이지 관련
+      self.mismatch_counter += 1 # 자동인게이지 관련
 
     #print( 'controlsAllowed={} self.mismatch_counter={}'.format( self.controlsAllowed, self.mismatch_counter ) )
   
@@ -471,9 +471,9 @@ class Controls:
     self.AM.process_alerts(self.sm.frame)
     CC.hudControl.visualAlert = self.AM.visual_alert
 
-    if not self.hyundai_lkas and self.enabled and self.controlsAllowed and not self.timer_start:
+    if not self.hyundai_lkas and self.enabled and self.controlsAllowed and not self.timer_start: # 자동인게이지 관련
       # send car controls over can
-      can_sends = self.CI.apply( CC, self.sm, self.CP )
+      can_sends = self.CI.apply( CC, self.sm, self.CP ) # 자동인게이지 관련
       self.pm.send('sendcan', can_list_to_can_capnp(can_sends, msgtype='sendcan', valid=CS.canValid))
 
 
@@ -581,7 +581,7 @@ class Controls:
 
     self.update_events(CS)
 
-    if not self.hyundai_lkas: # 원래는 read.only
+    if not self.hyundai_lkas: # 원래는 read.only  # 자동인게이지 관련
       # Update control state
       self.state_transition(CS)
       self.prof.checkpoint("State transition")

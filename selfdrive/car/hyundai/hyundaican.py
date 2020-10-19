@@ -20,9 +20,10 @@ def create_lkas11(packer, frame, car_fingerprint, apply_steer, steer_req,
   values["CF_Lkas_ToiFlt"] = 0
   values["CF_Lkas_MsgCount"] = frame % 0x10
   values["CF_Lkas_Chksum"] = 0
-  
+
   if car_fingerprint == CAR.GENESIS: # 제네시스DH 인게이지 목표 작업중
     values["CF_Lkas_Bca_R"] = 2 # 제네시스DH 계열등에서
+    values["CF_Lkas_SysWarning"] = lkas11["CF_Lkas_SysWarning"]
 
   if car_fingerprint in [CAR.PALISADE, CAR.SANTAFE, CAR.KONA_EV]:
     values["CF_Lkas_Bca_R"] = int(CC.hudControl.leftLaneVisible) + (int(CC.hudControl.rightLaneVisible) << 1)
