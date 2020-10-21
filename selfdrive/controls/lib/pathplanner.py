@@ -16,7 +16,7 @@ from selfdrive.kyd_conf import kyd_conf
 LaneChangeState = log.PathPlan.LaneChangeState
 LaneChangeDirection = log.PathPlan.LaneChangeDirection
 
-LOG_MPC = os.environ.get('LOG_MPC', False)
+LOG_MPC = True # os.environ.get('LOG_MPC', False)
 
 LANE_CHANGE_SPEED_MIN = 60 * CV.KPH_TO_MS
 LANE_CHANGE_TIME_MAX = 10.
@@ -140,7 +140,7 @@ class PathPlanner():
     x = max(sm['liveParameters'].stiffnessFactor, 0.1)
     sr = max(sm['liveParameters'].steerRatio, 0.1)
     #VM.update_params(0.8, CP.steerRatio) # 타이어 강성계수 고정,조향비율 고정 계산
-    VM.update_params(0.8, sr)
+    VM.update_params(x, sr)
 
     curvature_factor = VM.curvature_factor(v_ego)
 

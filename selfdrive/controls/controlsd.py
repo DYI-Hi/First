@@ -501,7 +501,7 @@ class Controls:
     controlsState.active = self.active
     controlsState.vEgo = CS.vEgo
     controlsState.vEgoRaw = CS.vEgoRaw
-    controlsState.angleSteers = CS.steeringAngle # 079에서는 우측값이 존재함 - angleOffset
+    controlsState.angleSteers = CS.steeringAngle - angleOffset # 079에서는 우측값이 존재함 - angleOffset
     controlsState.curvature = self.VM.calc_curvature(steer_angle_rad, CS.vEgo)
     controlsState.steerOverride = CS.steeringPressed
     controlsState.state = self.state
