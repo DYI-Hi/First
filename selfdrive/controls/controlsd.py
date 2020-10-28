@@ -480,7 +480,9 @@ class Controls:
     force_decel = (self.sm['dMonitoringState'].awarenessStatus < 0.) or \
                     (self.state == State.softDisabling)
 
-    steer_angle_rad = (CS.steeringAngle - self.sm['pathPlan'].angleOffset) * CV.DEG_TO_RAD
+    #steer_angle_rad = (CS.steeringAngle - self.sm['pathPlan'].angleOffset) * CV.DEG_TO_RAD
+    angleOffset = self.sm['pathPlan'].angleOffset # 테네시 추가 항목
+    steer_angle_rad = (CS.steeringAngle - angleOffset) * CV.DEG_TO_RAD # 테네시 추가 항목
 
     # controlsState
     dat = messaging.new_message('controlsState')
