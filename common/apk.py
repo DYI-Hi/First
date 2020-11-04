@@ -8,7 +8,7 @@ from selfdrive.swaglog import cloudlog
 from common.params import Params, put_nonblocking
 params = Params()
 
-android_packages = ("com.google.android.inputmethod.korean", "com.mixplorer", "com.rhmsoft.edit.pro", "com.skt.tmap.ku", "com.gmd.hidesoftkeys", "ai.comma.plus.offroad", "com.neokii.openpilot")
+android_packages = ("com.google.android.inputmethod.korean", "com.mixplorer", "com.rhmsoft.edit.pro", "com.skt.tmap.ku", "com.gmd.hidesoftkeys", "ai.comma.plus.offroad")
 
 def get_installed_apks():
   dat = subprocess.check_output(["pm", "list", "packages", "-f"], encoding='utf8').strip().split("\n")
@@ -38,8 +38,6 @@ def start_offroad():
   opkr_boot_navigation = True if params.get("OpkrBootNavigation", encoding='utf8') == "1" else False
 
   system("am start -n ai.comma.plus.offroad/.MainActivity")
-  pm_grant("com.neokii.openpilot", "android.permission.ACCESS_FINE_LOCATION")
-  system("am startservice com.neokii.openpilot/.MainService")
 
   if opkr_boot_navigation:
     system("pm enable com.gmd.hidesoftkeys")
